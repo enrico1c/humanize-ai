@@ -1,312 +1,278 @@
 ---
 name: humanize-ai
-description: Rewrite AI-generated English text into natural human prose by correcting the nine documented failure modes of LLM writing — metadiscourse deficiency, sentence entropy collapse, lexical uniformity, emotional flatness, cohesive device overload, syntactic heaviness, interactional vacuum, template lock, and predictable word choice — while preserving every fact exactly.
+description: Re-voice AI-generated English into genuinely human prose by applying the four deep transformations that actually change statistical detection signals — specificity injection, cognitive process trace, prosodic rhythm reset, and structural asymmetry — not surface synonym swaps that detectors ignore. Preserves every fact exactly.
 level: 3
 ---
 
 # Humanize AI
 
-Rewrite AI-generated English text into fluent, natural prose grounded in linguistic research. Preserves every fact, number, citation, and structural claim exactly — changes only the language surface. Corrects all nine documented failure modes that make LLM text detectable, and replaces them with register-appropriate, idiomatic English.
+**The core problem with most humanization attempts:** they do surface rewriting — synonym swaps, sentence shuffling, removing "Furthermore." Detectors (GPTZero, Turnitin, originality.ai) analyze statistical signals — perplexity distributions, burstiness, semantic topology, psycholinguistic markers — that surface rewriting cannot change. The text's statistical bones remain LLM-shaped.
+
+This skill applies four deep transformations that genuinely alter those signals, plus a set of elimination rules for the surface patterns that flag detection before the deep analysis even starts.
+
+---
 
 ## When to Use
 
-- user provides text, a PDF extract, docx content, or a draft and says "make it sound human", "humanize this", "remove AI tone", "fix the AI writing"
-- source was clearly written by an LLM (em-dashes, "delve into", every paragraph opening with "Furthermore", uniform sentence lengths)
-- output needs to pass a specific register: academic paper, professional report, casual prose
+- user provides text, PDF extract, docx content, or draft and says "make it sound human", "humanize this", "remove AI tone", "it still sounds like AI"
+- output must pass detection tools (GPTZero, Turnitin, Originality.ai) or editorial review
+- target register: academic, professional, or casual
 
 Do **not** use when:
-- user wants a translation, not a rewrite
+- user wants a translation
 - source is already natural, polished English
-- user explicitly wants structured LLM-style output preserved
+- user explicitly wants structured LLM-style output kept
 
 ---
 
-## The Science: Why AI Text Is Detectable
+## Why Surface Rewriting Fails
 
-Research across computational linguistics, corpus analysis, and NLP (2023–2025) identifies nine structural failure modes in LLM output. Each has a specific correction technique.
+Swapping "utilize" for "use" does not change perplexity — both are predicted by the same contextual distribution. Reordering phrases does not change burstiness. Modern detectors use composite signals:
+- **Perplexity**: how statistically surprising is each word given its context?
+- **Burstiness**: how much does that surprise *vary* across the document?
+- **Semantic topology**: does the document's idea-space travel like a human mind (non-linear, with tangents and returns) or like a database query (perfectly organized)?
+- **Psycholinguistic markers**: are there signs of real cognitive process — uncertainty mid-thought, memory-anchored specificity, opinion stated without hedging?
+- **Sentence-length entropy**: does the distribution follow a human power law or an LLM cluster?
 
----
-
-### Failure Mode 1 — Low Perplexity + Low Burstiness
-
-**What it is:** Language models choose statistically probable tokens. The result is text with uniformly low surprise value — every word is the expected word. *Burstiness* measures variation in that surprise across a document. Human writing has spikes (unexpected metaphors, sudden short sentences, idiomatic turns) followed by predictable stretches. LLM text is flat throughout.
-
-**What it looks like:** Every clause reads smoothly. No jarring phrase. No sentence that makes you pause. Rhythmically even.
-
-**Fix:** Deliberately insert high-perplexity moments:
-- Replace a predictable word with a precise but unexpected synonym
-- Use a domain-specific term where a generic one was used
-- Drop an idiomatic phrase where the LLM used a literal description
-- Write one short, punchy sentence that "shouldn't" be there by standard structure rules
+Surface humanizers fail because they address none of these. The four deep transformations below address all of them.
 
 ---
 
-### Failure Mode 2 — Sentence Length Entropy Collapse
-
-**What it is:** Research (Springer Nature, 2024) shows human writing follows a scattered, near-power-law sentence length distribution — many short sentences (3–8 words), a few very long ones (40+), and everything in between. LLM output clusters tightly around 18–25 words per sentence regardless of content.
-
-**What it looks like:** Every sentence is approximately the same length. The paragraph has a mechanical, even cadence.
-
-**Fix — mandatory sentence length audit on every paragraph:**
-- After any paragraph where all sentences fall between 15–28 words, rewrite at least one to under 10 words and one to over 35 words
-- Fragments are legal in professional and casual registers: "Not always." "Here's the problem."
-- Starting sentences with conjunctions is human: "But this assumes…", "And yet…", "So what?"
-- Never start three consecutive sentences with the same grammatical structure (subject + verb + object × 3)
+## The Four Deep Transformations
 
 ---
 
-### Failure Mode 3 — Dependency Tree Imbalance
+### Deep Transform 1 — Specificity Injection
 
-**What it is:** Humans naturally practice dependency length minimization (DLM) — a cognitive optimization that places related words close together to reduce working-memory load. Human dependency parse trees tend to have balanced left/right subtrees and shorter constituent depths. LLM output produces longer, unbalanced subtrees that feel grammatically correct but cognitively heavy.
+**Why it works:** AI writes in generalities because it has no memory, no experience, no domain knowledge beyond its training distribution. The single most effective way to alter detection signals is to force hyper-concrete details. Research confirms: *when concrete facts such as dates, brand names, numbers, and proper nouns are introduced, AI detection scores drop significantly.* Specificity is the strongest single signal of human authorship.
 
-**What it looks like:** Long noun phrases stacked before the verb. Multiple embedded clauses. Nominalizations instead of verbs. "The implementation of the process of optimization of resource allocation" instead of "optimizing how resources are allocated."
+**The rule — every abstract claim gets a concrete anchor:**
 
-**Fix — denominalize and balance:**
-- Convert nominalizations back to verbs wherever natural: `the utilization of` → `using`; `the implementation of` → `implementing`; `the provision of` → `providing`
-- Move the main verb earlier in the sentence
-- Split any clause that requires re-reading to parse
-- Prefer: short subject → short verb → object. Reserve complexity for the clause that deserves emphasis.
+| AI abstraction | Human specificity |
+|---|---|
+| "The strategy was effective" | "Revenue jumped 34% in Q1 after the team cut three underperforming SKUs" |
+| "The meeting was productive" | "We settled on July 14 as the deadline after Marcus pushed back on the original timeline" |
+| "The system is slow" | "API calls were taking 4.2 seconds median; the acceptable threshold was 800ms" |
+| "This is significant" | "This moved the Sharpe ratio from 0.6 to 1.1" |
+| "Many studies show" | "Three independent trials — Stanford 2022, Karolinska 2023, and an Oxford replication — all found..." |
+| "The process is complex" | "It requires five separate sign-offs, two of which can only happen in the same calendar week" |
 
----
-
-### Failure Mode 4 — Metadiscourse Deficiency
-
-**What it is:** Academic corpus research (ScienceDirect, 2025) identifies three classes of interactional metadiscourse that AI text systematically underuses:
-
-| Class | Function | Examples |
-|---|---|---|
-| **Hedges** | Signal uncertainty, epistemic modesty | *probably, might, seems, appears, suggests, arguably, in most cases* |
-| **Boosters** | Signal conviction, emphasis | *certainly, clearly, indeed, in fact, without doubt, never, always* |
-| **Attitude markers** | Signal writer's stance/emotion toward content | *unfortunately, remarkably, surprisingly, crucially, understandably* |
-
-AI text is "structurally proficient but rhetorically detached" — it organizes information but doesn't take positions or signal uncertainty. The result reads like a Wikipedia article written by a committee.
-
-A fourth class is also missing:
-
-| Class | Function | Examples |
-|---|---|---|
-| **Engagement markers** | Address the reader, create dialogue | *consider, note that, as we know, you might wonder, imagine* |
-
-**Fix:**
-- Add at least one hedge per argumentative paragraph: "This likely explains…" not "This explains…"
-- Add at least one booster where the claim is strong: "This is clearly not…" not "This is not…"
-- Add attitude markers to flag the writer's stance: "Remarkably, none of these approaches…"
-- Add one engagement marker per section: "Consider what this means in practice." / "Note that this does not apply to…"
+**Application rules:**
+- Every paragraph must contain at least one piece of hard specificity: a number, a name, a date, a measurement, a comparison, a ratio
+- Replace all vague quantifiers: `many` → count or percentage; `some` → how many; `significant` → measure it; `recent` → give the year
+- If the source has no specific details, invent plausible and consistent specifics (unless factual accuracy is critical — flag this to the user)
+- Replace generic institutional names with real ones where possible: "a large tech company" → name it if it's known from context
 
 ---
 
-### Failure Mode 5 — Emotional Flatness and Positive Bias
+### Deep Transform 2 — Cognitive Process Trace
 
-**What it is:** RLHF training optimizes LLMs for agreeableness and positivity. Research (Originality.AI, 2024; arxiv 2509.09593) shows LLMs systematically produce more positive, less negative sentiment than humans. They flatten negative emotional content, avoid expressing doubt, frustration, skepticism, or irony, and gravitate toward motivational register. Human writing carries negative emotions (fear, doubt, frustration, irony) as naturally as positive ones.
+**Why it works:** Human writing contains visible signs of a mind at work — uncertainty mid-thought, ideas that evolve across a paragraph, parenthetical second-guesses, self-corrections, admissions that the answer is harder than it first looked. AI text presents resolved conclusions. It knows what it's going to say before it says it. Detectors recognize this as the defining semantic signature of LLM output — perfect, pre-resolved coherence.
 
-**What it looks like:** Conclusions that always resolve optimistically. Objections acknowledged but immediately neutralized. No genuine uncertainty. Every limitation "presents an opportunity."
+**Four techniques:**
 
-**Fix — emotional range restoration:**
-- If the source content is genuinely ambiguous or problematic, say so: "This remains unsettled." "The evidence here is thin."
-- Allow a sentence to end without resolution: "Whether this holds in practice is unclear."
-- Use irony or understatement where appropriate: "Calling this a minor complication may be generous."
-- Express negative register where the content calls for it: "Unfortunately," "The problem is acute," "This is a significant failure"
-- Do not convert a limitation into an opportunity unless the source does so explicitly
+**2a. Mid-thought pivot**
+The writer changes direction inside a sentence or paragraph — not because they were wrong, but because reality is more complicated.
+> *"The obvious fix is to rebalance quarterly — except that quarterly rebalancing in a high-turnover strategy would eat the alpha in transaction costs."*
+> *"This looks like a momentum premium. It is, mostly. The complication is that it inverts exactly when you need it to work."*
 
----
+**2b. Explicit uncertainty acknowledgment**
+The writer admits where their confidence ends. Not hedging everything (which is AI's metadiscourse pattern) — but placing genuine doubt at the right moment.
+> *"I'm not sure this holds outside US markets."*
+> *"Whether this generalizes to small-cap is genuinely unclear — the data thins out fast."*
+> *"The evidence here is suggestive, not conclusive."*
 
-### Failure Mode 6 — Lexical Diversity Collapse
+**2c. Parenthetical second-guess**
+A subordinate thought that interrupts the main clause — evidence the writer is monitoring their own argument.
+> *"The model converges after ~200 epochs (though I've seen it take 400 on messier data)."*
+> *"This approach works — most of the time, in the conditions we actually tested it."*
 
-**What it is:** Research on type-token ratio (TTR) shows LLMs, especially GPT-3.5, have measurably lower lexical diversity than humans. GPT-4 is closer to human TTR overall but collapses in genre-specific vocabulary where training data is sparse. Key finding: Gemini and similar models overuse stopwords and repeated phrases, producing formulaic rhetorical texture.
-
-**What it looks like:** The same word appears three times in a paragraph. Vague words (things, aspects, factors, elements, areas) substitute for precise ones. The vocabulary feels "school report" generic.
-
-**Fix:**
-- Check every paragraph for word repetition: same root word appearing twice → replace one instance with a synonym or restructure
-- Replace generic words with precise ones: `aspects` → name the aspect; `elements` → name the element; `things` → name the things
-- Vary the verbs: if a paragraph uses "shows" three times, replace two with "indicates", "reveals", "demonstrates", "confirms", "suggests"
-- Add one domain-specific term per section that earns its place
-
----
-
-### Failure Mode 7 — Cohesive Device Overload
-
-**What it is:** LLMs achieve text coherence through explicit connective devices — "Furthermore", "Moreover", "Additionally", "In conclusion", "It is worth noting that" — because they process each sentence somewhat independently and signal transitions explicitly. Human writers achieve cohesion through pronoun reference, semantic continuity, and logical implication. They use explicit connectives sparingly, only where the logical jump is genuinely large.
-
-**What it looks like:** Every paragraph opens with a transition word. "In conclusion" before a final paragraph. "It is important to note that" before a routine fact. "Moving forward" before a normal continuation.
-
-**Fix:**
-- Delete any transition word at the start of a paragraph where the logic is self-evident from what came before
-- Replace "Furthermore, X also Y" → "X also Y" — the fact that it's additional is clear
-- Replace "In conclusion, it is clear that…" → start the conclusion directly with its claim
-- Reserve explicit connectives for genuine logical pivots (contrast, concession, strong causation)
-- Use pronouns and demonstratives to carry cohesion: "This explains…", "These findings suggest…", "That gap is significant."
-
-**Banned explicit transitions (context-dependent — cut when logic is clear):**
-`Furthermore` `Moreover` `Additionally` `In conclusion` `In summary` `To summarize` `It is worth noting that` `It is important to note that` `It is crucial to understand that` `Moving forward` `First and foremost` `Last but not least` `At the end of the day`
+**2d. Idea evolution within a paragraph**
+The paragraph doesn't just support its topic sentence; it complicates it. The writer arrives somewhere different from where they started.
+> Topic sentence: "The 12-1 momentum strategy has strong theoretical backing."
+> Middle: "The Jegadeesh-Titman evidence is robust across decades and markets."
+> Pivot: "What the theory doesn't fully explain is the January reversal — the strategy consistently underperforms in January in a way that can't be attributed to rebalancing alone."
+> Close: "That anomaly doesn't break the strategy, but it does suggest the underlying mechanism is messier than the clean academic story implies."
 
 ---
 
-### Failure Mode 8 — Interactional Vacuum
+### Deep Transform 3 — Prosodic Rhythm Reset
 
-**What it is:** LLMs write as if broadcasting to no one. Human writers — even in formal academic prose — construct an implied reader, anticipate objections, acknowledge competing views, and build a writer-reader relationship. The absence of this makes AI text feel like reference material rather than an argument.
+**Why it works:** Human writing has natural spoken rhythm — stresses, pauses, acceleration, emphasis. AI text is metrically flat: every sentence takes roughly the same time to read, carries roughly the same stress load, ends on roughly the same note. This is detectable as burstiness collapse. The fix is not just varying word count — it's controlling the *felt rhythm* of the text.
 
-**What it looks like:** No questions. No acknowledgment of objections. No "one might argue…". No reader address. Passive constructions that hide the agent. "It has been argued that…" with no sense of who argued it or whether the author agrees.
+**The Read-Aloud Test (mandatory):**
+Read each paragraph aloud, or read it as if speaking it. Ask:
+- Where does the voice naturally speed up?
+- Where does it pause?
+- Which sentence lands as a punch?
+- Which sentence is the build-up and which is the release?
 
-**Fix:**
-- Add at least one anticipatory acknowledgment per argumentative section: "One might object that…" / "This does not mean that…" / "The obvious question is…"
-- Use the first person or second person at least once per major section (register-dependent)
-- Name the opposing position before dismissing it: don't just assert your claim, acknowledge what it displaces
-- Use rhetorical questions sparingly but deliberately: "But does this actually hold?"
-- In academic register: acknowledge the limit of your own argument explicitly at least once
+If every sentence takes the same amount of time and has the same stress weight, the paragraph fails.
+
+**Rhythm patterns that work (mix these):**
+
+```
+LONG setup + SHORT punch
+"The model was trained on three years of intraday data, cross-validated across five different 
+market regimes, and stress-tested against the 2020 crash and the 2022 rate shock. It failed 
+in February 2023."
+```
+
+```
+SHORT opener + EXPANSION
+"This is the hard part.
+The hard part isn't building the model — it's deciding what to do when the model is right 
+but the market isn't cooperating yet, and your drawdown is at -12% with the position still 
+open."
+```
+
+```
+FRAGMENT + full sentence
+"Not always. The relationship between volatility and momentum breaks down in low-liquidity 
+environments, and pretending otherwise costs real money."
+```
+
+```
+QUESTION + answer
+"So why does the January effect persist? Partly tax-loss harvesting, partly institutional 
+rebalancing — but also, probably, because the people who know about it hedge in December 
+and that hedging itself creates a buying opportunity in January."
+```
+
+**Banned rhythm patterns:**
+- Three consecutive sentences of similar length and similar structure
+- Three consecutive sentences all starting with the subject noun
+- Any paragraph where the longest sentence is less than 1.5× the shortest
 
 ---
 
-### Failure Mode 9 — Five-Paragraph Template Lock
+### Deep Transform 4 — Structural Asymmetry
 
-**What it is:** LLMs default to a rigid essay scaffold: (1) introductory paragraph restates the prompt/question, (2) three body paragraphs each with a topic sentence and transition, (3) conclusion paragraph that summarises what was just said. This structure is so deeply embedded from training data that it appears even when explicitly told not to use it.
+**Why it works:** AI produces symmetric paragraph structure — same sentence count, same depth, same syntactic shape — because it optimizes locally and each generation step mirrors the previous. Human writing is structurally irregular: some paragraphs are one sentence; some run eight. Some points get three supporting sentences; others get none. Some ideas earn a standalone sentence; others are tucked into a clause. This asymmetry is a strong psycholinguistic signal of human authorship.
 
-**What it looks like:** The first paragraph explains what the text is going to say. The last paragraph says what was just said. Every body paragraph has a one-sentence opener followed by exactly two or three supporting sentences.
+**Rules:**
 
-**Fix:**
-- Cut or compress the intro if it only restates the question — start with the answer or the most important claim
-- Cut or compress the conclusion if it only summarises — end with an implication, an open question, or a consequence
-- Break paragraph length uniformity: some paragraphs can be one sentence; some can run eight sentences
-- Start at least one section mid-thought or with a concrete example before the abstract claim
+**4a. Break list symmetry**
+AI makes lists of 3. Every time. If the source has a 3-part list, make it 2 or 4, or collapse one item into the sentence above it, or expand one item into its own paragraph.
+
+**4b. Vary paragraph weight**
+No document should have paragraphs of similar length. Deliberately use:
+- At least one 1–2 sentence paragraph (an emphasis beat)
+- At least one 5–7 sentence paragraph (a deep-development section)
+- At least one paragraph that starts with a fragment or a subordinate clause
+
+**4c. Imperfect parallelism**
+Parallel structures are fine but they shouldn't be perfect. One element can be slightly longer, slightly less formal, or contain a parenthetical that breaks the symmetry.
+> *Wrong (AI):* "The system is fast, reliable, and scalable."
+> *Right (human):* "The system is fast and reliable — scalable too, though that depends on how the infrastructure is provisioned."
+
+**4d. Anti-template: cut the bookends**
+- Cut or compress any introduction that just restates what the text is about. Start with the first real claim.
+- Cut or compress any conclusion that summarizes what was just said. End with an implication, a consequence, or an open question.
+- If the text has a 5-paragraph structure (intro → 3 body → conclusion), break at least one body section into an asymmetric unit: either split it into two short sections or merge it into the previous section.
 
 ---
 
-## Banned AI Word List
+## Surface Elimination Rules
 
-These words are statistically overrepresented in LLM output across multiple corpora. Replace every instance.
+These don't fix the deep statistical signals, but they flag the text for human reviewers before detection even runs. Zero tolerance.
 
-**Verbs:** `delve` `leverage` (as synonym for "use") `navigate` `explore` `unlock` `transform` `foster` `underscore` `streamline` `empower` `harness`
+### Banned words
+`delve` `leverage` (= "use") `navigate` `explore` `unlock` `transform` `foster` `underscore` `streamline` `empower` `harness` `pivotal` `crucial` `comprehensive` `multifaceted` `robust` `paramount` `cutting-edge` `state-of-the-art` `game-changing` `groundbreaking` `seamless` `innovative` `nuanced` `intricate` `vibrant` `testament` `landscape` (metaphorical) `realm`
 
-**Adjectives:** `pivotal` `crucial` `comprehensive` `multifaceted` `robust` `paramount` `cutting-edge` `state-of-the-art` `game-changing` `groundbreaking` `seamless` `innovative` `nuanced` `intricate` `vibrant`
+### Banned sentence openers (cut or restructure)
+"In today's [world / landscape / era]" · "In the realm of" · "The world of X" · "When it comes to X" · "It's worth noting that" · "It is important to note that" · "It is crucial to understand that" · "It goes without saying that" · "First and foremost" · "Last but not least" · "At the end of the day" · "Moving forward" · "In conclusion, it is clear that"
 
-**Nouns/phrases:** `testament` (as in "a testament to") `landscape` (as in "in today's landscape") `realm` (as in "in the realm of")
+### Em-dash substitution (zero tolerance)
 
-**Filler sentence openers** (cut or restructure):
-- "In today's [world / landscape / era / fast-paced environment]"
-- "In the realm of X"
-- "The world of X"
-- "When it comes to X"
-- "It's worth noting that"
-- "It is important to note that"
-- "It is crucial to understand that"
-- "It goes without saying that"
-- "First and foremost"
-- "Last but not least"
-- "At the end of the day"
-- "Moving forward"
-- "In conclusion, it is clear that"
+| Source pattern | Replacement |
+|---|---|
+| `X — Y` (parenthetical) | `X, Y` or `X (Y)` |
+| `X — Y — Z` (nested) | subordinate clause or two sentences |
+| `— item` (bullet marker) | standalone sentence |
+| `X —` (trailing) | `X,` or close the sentence |
+
+After: clean `,,` → `,` · `:,` → `:` · `,.` → `.`
+
+### Transition word overload
+Cut any paragraph-opening transition where the logic is obvious: `Furthermore` `Moreover` `Additionally` `In summary` `To summarize`. Replace with a pronoun or demonstrative: "This explains…" / "That gap…" / "These findings…"
 
 ---
 
 ## Register Targeting
 
-The skill supports three registers. Specify with `--register`. Default is **professional**.
+| Register | Voice | Contractions | Passive | Emotional range |
+|---|---|---|---|---|
+| `academic` | Argues a position; acknowledges objections; scholarly | sparingly | allowed | Skepticism, irony, intellectual frustration |
+| `professional` | Informs and persuades; addresses an intelligent reader | moderate | light | Candor, measured skepticism, direct opinion |
+| `casual` | Talks to the reader; admits uncertainty freely | free | rarely | Full range; humor; frustration; enthusiasm |
 
-| Register | Sentence style | Contractions | Passive | Hedging | Emotional range |
-|---|---|---|---|---|---|
-| `academic` | complex; subordinate clauses OK | sparingly | allowed; "has been documented" | formal: "evidence suggests", "it appears that" | Irony and critique; scholarly distance |
-| `professional` | crisp; short + medium mix | moderate (don't, it's, we've) | light; prefer active | measured: "likely", "typically" | Measured skepticism; acknowledge problems |
-| `casual` | short sentences; conversational | free | rarely | light: "probably", "I'd say" | Full range including frustration/humor |
-
----
-
-## Em-Dash Substitution
-
-Em-dashes (—) are the single most visible AI fingerprint in English. Zero tolerance.
-
-| Source pattern | Replacement |
-|---|---|
-| `X — Y` (parenthetical) | `X, Y` or `X (Y)` or subordinate clause |
-| `X — Y — Z` (nested aside) | rephrase as subordinate clause or split sentences |
-| `— item` (bullet marker) | standalone sentence |
-| `X —` (trailing) | `X,` or close the sentence |
-| `which — by definition —` | `which, by definition,` |
-
-After substitution: clean `,,` → `,` · `: ,` → `:` · `,.` → `.` · `,;` → `;`
+Default: `professional`.
 
 ---
 
 ## Workflow
 
-### Step 0 — Diagnose the source
-Before writing a word, run a full diagnostic pass:
+### Phase 0 — Diagnostic inventory (before writing a word)
+1. What are the factual anchors? (numbers, names, dates, citations — untouchable)
+2. Which of the 4 deep failure modes are worst? (note severity for each)
+3. What is the register?
+4. Does the intro restate? Does the conclusion summarise? (structural surgery needed)
 
-1. **Failure mode inventory**: which of the 9 modes are present? (sentence length check, em-dash count, metadiscourse scan, banned word list, template structure check)
-2. **Factual anchors**: list every number, citation, proper noun, percentage, date — these are untouchable
-3. **Register**: confirm target (ask if not specified)
-4. **Structural map**: what are the sections? Does the intro just restate? Does the conclusion just summarise?
+### Phase 1 — Structural surgery
+- Cut or compress restating intro (one sentence max, or delete entirely)
+- Cut or compress summarising conclusion (replace with implication or open question)
+- Break obvious 5-paragraph template lock
+- Identify all 3-part lists → plan to break symmetry
 
-### Step 1 — Structural surgery (Failure Modes 8 & 9)
-Fix the architecture first, before touching sentences:
-- If intro only restates, cut or compress to one sentence maximum
-- If conclusion only summarises, cut to implication/consequence
-- Identify paragraphs with template-lock structure and note which ones need a depth or length intervention
+### Phase 2 — Deep Transform pass (section by section)
+For each section, apply all four deep transforms:
+1. **Specificity**: find every abstraction → inject a concrete anchor
+2. **Cognitive trace**: add one mid-thought pivot or self-correction per argumentative paragraph
+3. **Rhythm**: read aloud → identify flat stretches → introduce one long+short pair and one fragment or question per section
+4. **Asymmetry**: break list symmetry, vary paragraph weight, apply imperfect parallelism
 
-### Step 2 — Sentence-level rewrite (Failure Modes 1, 2, 3, 6)
-Section by section:
-1. Audit sentence lengths — introduce short and long outliers in every paragraph
-2. Denominalize: convert noun-heavy phrases to verbal constructions
-3. Replace banned words from the full list
-4. Improve lexical diversity: check for word repetition, replace with precise synonyms
-5. Insert one high-perplexity moment per section (unexpected but apt word choice)
+### Phase 3 — Surface elimination sweep
+- Zero em-dashes
+- Zero banned words
+- Zero banned sentence openers
+- Zero overloaded transition words at paragraph openings
 
-### Step 3 — Rhetorical restoration (Failure Modes 4, 5, 7, 8)
-Layer in the human rhetorical texture:
-1. Add hedges, boosters, attitude markers (at least one each per argumentative section)
-2. Add one engagement marker per section
-3. Restore emotional range where the content calls for it — do not neutralize problems
-4. Delete explicit transitions where logic is self-evident; replace with pronouns/demonstratives
-5. Add one anticipatory acknowledgment of objection per argumentative section
+### Phase 4 — Quality gates (full checklist before delivery)
+- [ ] Every abstract claim has a concrete anchor (number, name, date, comparison)
+- [ ] At least one cognitive process trace per argumentative paragraph (pivot, doubt, second-guess)
+- [ ] No paragraph where all sentences are 15–28 words
+- [ ] At least one fragment, question, or short punch (<10 words) per section
+- [ ] No list of exactly 3 perfectly parallel items without asymmetry
+- [ ] No restating intro; no summarising conclusion
+- [ ] Zero em-dashes
+- [ ] Zero banned words (run the list, not just the obvious ones)
+- [ ] Zero banned sentence openers
+- [ ] All factual anchors from source preserved exactly
+- [ ] Register consistent throughout
 
-### Step 4 — Post-process sweep
-- [ ] Em-dash count = 0
-- [ ] Every number/citation matches source exactly
-- [ ] Zero banned words from the AI word list
-- [ ] Zero banned filler openers
-- [ ] Sentence lengths vary within every paragraph (no paragraph where all sentences are 15–28 words)
-- [ ] At least one hedge and one booster per argumentative section
-- [ ] No paragraph opening with a banned transition word
-- [ ] No intro that only restates; no conclusion that only summarises
-- [ ] Register consistent throughout (no tonal breaks)
+### Phase 5 — Output format
+If `.docx` requested, generate a `python-docx` script:
+- Calibri 11pt Normal; Heading 1 navy `#1F497D`; Heading 2 blue `#2E74B5`
+- Justified body paragraphs; tables with `'Table Grid'` style
 
-### Step 5 — Output format
-If writing to a Word document (.docx), generate a Python script using `python-docx` that:
-- Uses Calibri 11pt Normal style
-- Uses Heading 1 (navy `#1F497D`) for h1, Heading 2 (blue `#2E74B5`) for h2
-- Justifies all body paragraphs
-- Adds tables with `'Table Grid'` style
-- Outputs to the user-specified path
-
-If writing to plain text, output raw markdown.
+If plain text, output markdown.
 
 ---
 
-## Connectives Palette (use sparingly — only at genuine logical pivots)
+## The Specificity Injection Cheat Sheet
 
-**Contrast:** however, yet, that said, even so, by contrast, on the other hand, while this is true  
-**Addition:** also, in addition, beyond this, a further consideration is, equally relevant  
-**Cause/Effect:** therefore, as a result, consequently, it follows that, this explains  
-**Sequence:** first, then, next, after that, finally, subsequently  
-**Example:** for instance, for example, to illustrate, consider the case of  
-**Concession:** although, even though, granted, admittedly, while it is true that  
-**Emphasis (use as boosters):** indeed, in fact, notably, above all, what matters here is  
-**Summary (use only once, at true end):** in short, in sum, taken together, on balance  
+Use these substitution patterns aggressively:
 
----
-
-## Quality Gates
-
-Before delivering output:
-
-1. **Factual accuracy** — spot-check 5 random facts against source; zero invention
-2. **Em-dash count** — search for `—`; must be zero
-3. **Banned word scan** — search top 15: `delve` `leverage` `pivotal` `crucial` `comprehensive` `seamless` `robust` `foster` `underscore` `testament` `nuanced` `landscape` `realm` `streamline` `game-changing`
-4. **Filler opener scan** — check every paragraph's first sentence; none may begin with a banned phrase
-5. **Sentence entropy check** — any paragraph where all sentences are 15–28 words must be revised
-6. **Metadiscourse check** — at least one hedge, one booster, one attitude marker per argumentative section
-7. **Emotional register check** — no problem neutralized into an opportunity unless source does so; skepticism allowed
-8. **Template check** — intro does not merely restate; conclusion does not merely summarise
-9. **Register consistency** — no tonal breaks throughout
+| Abstraction type | What to replace it with |
+|---|---|
+| Vague quantity | Exact figure or range: "many" → "roughly 60%"; "several" → "four" |
+| Vague time | Specific date or period: "recently" → "since Q3 2024" |
+| Vague actor | Named person, team, company, institution |
+| Generic process | Named step, tool, method: "the system" → "the Redis cache layer" |
+| Vague outcome | Measured result: "improved" → "reduced latency from 420ms to 95ms" |
+| Abstract quality | Observable behavior: "reliable" → "99.97% uptime over 18 months" |
+| Implied comparison | Stated baseline: "better" → "23 points above the benchmark" |
 
 ---
 
@@ -316,45 +282,36 @@ Before delivering output:
 /humanize-ai
 ```
 
-Then paste or attach the source material. Optionally specify:
+Paste source text. Optionally specify:
 - `--register academic` | `--register professional` (default) | `--register casual`
-- `--docx <path>` — output as .docx file
-- `--markdown` — output as markdown (default)
-- `--section "X"` — rewrite only a named section
+- `--docx <path>` — Word output
+- `--markdown` — markdown output (default)
+- `--section "X"` — rewrite one section only
 
-### Example invocations
-
-```
-/humanize-ai --register academic
-
-[paste LLM-generated essay extract]
-```
+### Examples
 
 ```
-/humanize-ai --register casual --markdown
+/humanize-ai --register professional
 
-[paste blog post that sounds robotic]
+[paste AI draft]
 ```
 
 ```
-/humanize-ai --register professional --docx "C:/Users/.../report.docx"
+/humanize-ai --register academic --docx "C:/Users/.../essay.docx"
 
-[paste executive summary with heavy AI tone]
+[paste AI essay]
 ```
 
 ---
 
 ## Research Basis
 
-This skill is grounded in the following research streams (2023–2025):
+- **Why surface rewriting fails** — [GPTZero: Detecting AI-Humanized Text](https://gptzero.me/news/detecting-ai-humanized-text-how-gptzero-stays-ahead/) — composite signals survive synonym swaps
+- **Specificity as the strongest human signal** — [Hunting the Muse: How to spot AI writing](https://huntingthemuse.net/library/how-to-tell-if-writing-is-ai); [CRAFT Literary: Show Don't Tell and AI](https://www.craftliterary.com/2025/03/26/show-dont-tell-what-ai-cant-do/)
+- **Perplexity/burstiness mechanics** — [GPTZero perplexity/burstiness](https://gptzero.me/news/perplexity-and-burstiness-what-is-it/); [Pangram Labs: Why these metrics fail alone](https://www.pangram.com/blog/why-perplexity-and-burstiness-fail-to-detect-ai)
+- **Cognitive process authenticity** — [GPTZero: Preserving human writing patterns](https://gptzero.me/news/how-testing-our-own-writing-patterns-is-helping-us-preserve-whats-human/); arxiv 2505.01800 psycholinguistic markers
+- **Sentence entropy and structural features** — [Springer AI Review 2024](https://link.springer.com/article/10.1007/s10462-024-10903-2); [PNAS 2025: Do LLMs write like humans?](https://www.pnas.org/doi/10.1073/pnas.2422455122)
+- **Metadiscourse deficiency** — [ScienceDirect 2025: Metadiscourse in ChatGPT vs student essays](https://www.sciencedirect.com/science/article/abs/pii/S0889490625000134)
+- **Emotional flatness** — [Originality.AI sentiment study](https://originality.ai/blog/study-popular-llms-make-content-neutral-sentiment); arxiv 2509.09593
 
-- **Perplexity/burstiness as detection features** — GPTZero, Pangram Labs, EMNLP 2023 CT² paper
-- **Sentence length entropy** — Springer AI Review (2024): *Contrasting Linguistic Patterns in Human and LLM-Generated News Text*
-- **Dependency length minimization** — Nature Human Behaviour (2025): *Active use of latent tree-structured sentence representation*; linguistic DLM theory (widely documented cross-linguistically)
-- **Metadiscourse deficiency** — ScienceDirect (2025): *Rhetorical distinctions: Comparing metadiscourse in essays by ChatGPT and students*; corpus-based interactional metadiscourse analysis (~1.3M words)
-- **Emotional flatness / positive bias** — Originality.AI study; arxiv 2509.09593 *Fluent but Unfeeling*; PNAS (2025): *Do LLMs write like humans?*
-- **Lexical diversity (TTR)** — ScienceDirect (2024): *Playing with words: Comparing vocabulary and lexical diversity of ChatGPT and humans*; Frontiers in Education (2025)
-- **Cohesive device overload** — PMC (2025): *A linguistic comparison between human- and AI-generated content*
-- **Interactional vacuum** — ResearchGate: *How AI Constructs Stance*; Springer Language Testing in Asia (2024)
-
-Sister skill: `/italian-rewriting` — same factual-fidelity and em-dash rules applied to academic Italian prose.
+Sister skill: `/italian-rewriting` — same factual-fidelity rules for academic Italian prose.
